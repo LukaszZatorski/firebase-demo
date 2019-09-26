@@ -3,6 +3,7 @@ import { Link, withRouter } from 'react-router-dom';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import { FirebaseContext } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
+
 const SignUpPage = withRouter(({ history }) => {
   const firebase = useContext(FirebaseContext);
   return (
