@@ -3,6 +3,7 @@ import { withRouter } from 'react-router-dom';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 
 import { SignUpLink } from '../SignUp';
+import { PasswordForgetLink } from '../PasswordForget';
 import { FirebaseContext } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
 
@@ -60,6 +61,7 @@ const SignInPage = withRouter(({ history }) => {
         )}
       />
       <SignUpLink />
+      <PasswordForgetLink />
     </div>
   );
 });
