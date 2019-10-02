@@ -1,11 +1,13 @@
 import React, { useContext } from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import { FirebaseContext } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
 
-const SignUpPage = withRouter(({ history }) => {
+const SignUpPage = () => {
   const firebase = useContext(FirebaseContext);
+  let history = useHistory();
   return (
     <div>
       <h1>SignUp</h1>
@@ -75,7 +77,7 @@ const SignUpPage = withRouter(({ history }) => {
       />
     </div>
   );
-});
+};
 
 const SignUpLink = () => (
   <p>

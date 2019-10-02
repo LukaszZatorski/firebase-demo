@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { withRouter } from 'react-router-dom';
+import { useHistory } from 'react-router';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 
 import { SignUpLink } from '../SignUp';
@@ -7,8 +7,9 @@ import { PasswordForgetLink } from '../PasswordForget';
 import { FirebaseContext } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
 
-const SignInPage = withRouter(({ history }) => {
+const SignInPage = () => {
   const firebase = useContext(FirebaseContext);
+  let history = useHistory();
   return (
     <div>
       <h1>SignIn</h1>
@@ -64,6 +65,6 @@ const SignInPage = withRouter(({ history }) => {
       <PasswordForgetLink />
     </div>
   );
-});
+};
 
 export default SignInPage;

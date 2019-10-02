@@ -5,10 +5,6 @@ import SignOutButton from '../SignOut';
 import { AuthUserContext } from '../Session';
 import * as ROUTES from '../../constants/routes';
 
-type NavigationProps = {
-  authUser: null | firebase.User;
-};
-
 const Navigation = () => {
   const authUser = useContext(AuthUserContext);
   return (
