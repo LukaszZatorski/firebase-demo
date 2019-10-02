@@ -16,11 +16,13 @@ import * as ROUTES from '../../constants/routes';
 const App = () => {
   const firebase = useContext(FirebaseContext);
   const [authUser, setAuthUser] = useState<firebase.User | null>(null);
-
   useEffect(() => {
-    firebase!.auth.onAuthStateChanged(authUser => {
+    const listener = firebase!.auth.onAuthStateChanged(authUser => {
       authUser ? setAuthUser(authUser) : setAuthUser(null);
     });
+    return () => {
+      listener();
+    };
   });
   return (
     <AuthUserContext.Provider value={authUser}>
