@@ -42,6 +42,13 @@ const SignUpPage = () => {
         onSubmit={(values, actions) => {
           firebase!
             .doCreateUserWithEmailAndPassword(values.email, values.password)
+            .then(authUser => {
+              // Create a user in your Firebase realtime database
+              return firebase!.user(authUser.user!.uid).set({
+                username: values.username,
+                email: values.email,
+              });
+            })
             .then(
               () => {
                 actions.setSubmitting(false);

@@ -57,3 +57,11 @@ form div {
   cursor: pointer;
   color: white;
 }
+
+.adminDashboard ul li {
+  margin: 5px 0;
+}
+
+.adminDashboard ul li span {
+  margin-right: 10px;
+}
