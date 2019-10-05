@@ -1,5 +1,5 @@
 import React from 'react';
-import { withAuthorization } from '../Session';
+import { withAuthorization, AuthUser } from '../Session';
 
 const HomePage = () => (
   <div>
@@ -7,5 +7,5 @@ const HomePage = () => (
     <p>The Home Page is accessible by every signed in user.</p>
   </div>
 );
-const condition = (authUser: firebase.User | null) => !!authUser;
+const condition = (authUser: AuthUser | null) => !!authUser;
 export default withAuthorization(condition)(HomePage);

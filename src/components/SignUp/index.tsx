@@ -4,6 +4,11 @@ import { useHistory } from 'react-router';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import { FirebaseContext } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
+import * as ROLES from '../../constants/roles';
+
+type Roles = {
+  [string_key: string]: string;
+};
 
 const SignUpPage = () => {
   const firebase = useContext(FirebaseContext);
@@ -17,6 +22,7 @@ const SignUpPage = () => {
           email: '',
           password: '',
           passwordConfirmation: '',
+          isAdmin: false,
         }}
         validate={values => {
           let errors: any = {};
@@ -40,6 +46,10 @@ const SignUpPage = () => {
           return errors;
         }}
         onSubmit={(values, actions) => {
+          const roles: Roles = {};
+          if (values.isAdmin) {
+            roles[ROLES.ADMIN] = ROLES.ADMIN;
+          }
           firebase!
             .doCreateUserWithEmailAndPassword(values.email, values.password)
             .then(authUser => {
@@ -47,6 +57,7 @@ const SignUpPage = () => {
               return firebase!.user(authUser.user!.uid).set({
                 username: values.username,
                 email: values.email,
+                roles,
               });
             })
             .then(
@@ -61,7 +72,7 @@ const SignUpPage = () => {
               },
             );
         }}
-        render={({ status, isValid, isSubmitting }) => (
+        render={({ status, isValid, isSubmitting, values }) => (
           <Form>
             <Field type='text' name='username' placeholder='Username' />
             <ErrorMessage name='username' component='div' />
@@ -75,6 +86,11 @@ const SignUpPage = () => {
               placeholder='Confirm Password'
             />
             <ErrorMessage name='passwordConfirmation' component='div' />
+            <label className='Form-group'>
+              <span>Is admin?</span>
+              <Field type='checkbox' name='isAdmin' checked={values.isAdmin} />
+              <span className='Checkmark'></span>
+            </label>
             {status && status.msg && <div>{status.msg}</div>}
             <button type='submit' disabled={isSubmitting || !isValid}>
               Sign Up

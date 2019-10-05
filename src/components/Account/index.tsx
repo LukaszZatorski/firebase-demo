@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import PasswordChangeForm from '../PasswordChange';
-import { AuthUserContext, withAuthorization } from '../Session';
+import { AuthUserContext, withAuthorization, AuthUser } from '../Session';
 
 const AccountPage = () => {
   const authUser = useContext(AuthUserContext);
@@ -13,5 +13,5 @@ const AccountPage = () => {
   );
 };
 
-const condition = (authUser: firebase.User | null) => !!authUser;
+const condition = (authUser: AuthUser | null) => !!authUser;
 export default withAuthorization(condition)(AccountPage);

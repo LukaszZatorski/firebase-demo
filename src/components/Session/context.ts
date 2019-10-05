@@ -1,5 +1,11 @@
 import React from 'react';
 
-const AuthUserContext = React.createContext<firebase.User | null>(null);
+export type AuthUser = {
+  uid: string;
+  email: string;
+  roles: { [string_key: string]: string };
+};
+
+const AuthUserContext = React.createContext<AuthUser | null>(null);
 
 export default AuthUserContext;

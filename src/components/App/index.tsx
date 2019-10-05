@@ -9,17 +9,22 @@ import HomePage from '../Home';
 import AccountPage from '../Account';
 import AdminPage from '../Admin';
 
-import { AuthUserContext } from '../Session';
+import { AuthUserContext, AuthUser } from '../Session';
 import { FirebaseContext } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
 
 const App = () => {
   const firebase = useContext(FirebaseContext);
-  const [authUser, setAuthUser] = useState<firebase.User | null>(null);
+  const [authUser, setAuthUser] = useState<AuthUser | null>(null);
   useEffect(() => {
-    const listener = firebase!.auth.onAuthStateChanged(authUser => {
-      authUser ? setAuthUser(authUser) : setAuthUser(null);
-    });
+    const listener = firebase!.onAuthUserListener(
+      (authUser: AuthUser) => {
+        setAuthUser(authUser);
+      },
+      () => {
+        setAuthUser(null);
+      },
+    );
     return () => {
       listener();
     };

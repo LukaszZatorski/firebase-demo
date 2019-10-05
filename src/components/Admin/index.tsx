@@ -1,5 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
+
 import { FirebaseContext } from '../Firebase';
+import { withAuthorization, AuthUser } from '../Session';
+import * as ROLES from '../../constants/roles';
 
 const Admin = () => {
   const firebase = useContext(FirebaseContext);
@@ -25,7 +28,7 @@ const Admin = () => {
   return (
     <div className='adminDashboard'>
       <h1>Admin</h1>
-
+      <p>The Admin Page is accessible by every signed in admin user.</p>
       {loading && <div>Loading ...</div>}
       {users && <UserList users={users} />}
     </div>
@@ -51,4 +54,7 @@ const UserList = ({ users }: any) => {
     </ul>
   );
 };
-export default Admin;
+
+const condition = (authUser: AuthUser | null) =>
+  !!authUser && !!authUser.roles[ROLES.ADMIN];
+export default withAuthorization(condition)(Admin);

@@ -2,19 +2,28 @@ import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import SignOutButton from '../SignOut';
 
-import { AuthUserContext } from '../Session';
+import { AuthUserContext, AuthUser } from '../Session';
 import * as ROUTES from '../../constants/routes';
+import * as ROLES from '../../constants/roles';
 
 const Navigation = () => {
   const authUser = useContext(AuthUserContext);
   return (
     <div className='Navigation'>
-      {authUser ? <NavigationAuth /> : <NavigationNonAuth />}
+      {authUser ? (
+        <NavigationAuth authUser={authUser} />
+      ) : (
+        <NavigationNonAuth />
+      )}
     </div>
   );
 };
 
-const NavigationAuth = () => (
+type NavigationAuthProps = {
+  authUser: AuthUser;
+};
+
+const NavigationAuth = ({ authUser }: NavigationAuthProps) => (
   <ul>
     <li>
       <Link to={ROUTES.LANDING}>Landing</Link>
@@ -25,9 +34,11 @@ const NavigationAuth = () => (
     <li>
       <Link to={ROUTES.ACCOUNT}>Account</Link>
     </li>
-    <li>
-      <Link to={ROUTES.ADMIN}>Admin</Link>
-    </li>
+    {!!authUser.roles[ROLES.ADMIN] && (
+      <li>
+        <Link to={ROUTES.ADMIN}>Admin</Link>
+      </li>
+    )}
     <li>
       <SignOutButton />
     </li>
