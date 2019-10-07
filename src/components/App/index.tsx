@@ -15,13 +15,17 @@ import * as ROUTES from '../../constants/routes';
 
 const App = () => {
   const firebase = useContext(FirebaseContext);
-  const [authUser, setAuthUser] = useState<AuthUser | null>(null);
+  const [authUser, setAuthUser] = useState<AuthUser | null>(
+    JSON.parse(localStorage.getItem('authUser')!),
+  );
   useEffect(() => {
     const listener = firebase!.onAuthUserListener(
       (authUser: AuthUser) => {
+        localStorage.setItem('authUser', JSON.stringify(authUser));
         setAuthUser(authUser);
       },
       () => {
+        localStorage.removeItem('authUser');
         setAuthUser(null);
       },
     );
