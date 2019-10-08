@@ -61,9 +61,53 @@ const SignInPage = () => {
           </Form>
         )}
       />
+      <SignInGoogle />
       <SignUpLink />
       <PasswordForgetLink />
     </div>
+  );
+};
+
+const SignInGoogle = () => {
+  const firebase = useContext(FirebaseContext);
+  let history = useHistory();
+  return (
+    <Formik
+      initialValues={{
+        errors: null,
+      }}
+      onSubmit={(values, actions) => {
+        firebase!
+          .doSignInWithGoogle()
+          .then(socialAuthUser => {
+            // Create a user in your Firebase Realtime Database
+            return firebase!.user(socialAuthUser.user!.uid).set({
+              username: socialAuthUser.user!.displayName,
+              email: socialAuthUser.user!.email,
+              roles: {},
+            });
+          })
+          .then(
+            () => {
+              actions.setSubmitting(false);
+              actions.resetForm();
+              history.push(ROUTES.HOME);
+            },
+            error => {
+              actions.setSubmitting(false);
+              actions.setStatus({ msg: error.message });
+            },
+          );
+      }}
+      render={({ status, isSubmitting }) => (
+        <Form>
+          {status && status.msg && <div>{status.msg}</div>}
+          <button type='submit' disabled={isSubmitting}>
+            Sign In with Google
+          </button>
+        </Form>
+      )}
+    />
   );
 };
 
