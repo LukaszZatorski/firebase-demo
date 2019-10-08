@@ -15,12 +15,14 @@ class Firebase {
   auth: app.auth.Auth;
   db: app.database.Database;
   googleProvider: app.auth.GoogleAuthProvider;
+  facebookProvider: app.auth.FacebookAuthProvider;
   constructor() {
     app.initializeApp(config);
 
     this.auth = app.auth();
     this.db = app.database();
     this.googleProvider = new app.auth.GoogleAuthProvider();
+    this.facebookProvider = new app.auth.FacebookAuthProvider();
   }
 
   // *** Auth API ***
@@ -32,6 +34,8 @@ class Firebase {
     this.auth.signInWithEmailAndPassword(email, password);
 
   doSignInWithGoogle = () => this.auth.signInWithPopup(this.googleProvider);
+
+  doSignInWithFacebook = () => this.auth.signInWithPopup(this.facebookProvider);
 
   doSignOut = () => this.auth.signOut();
 
