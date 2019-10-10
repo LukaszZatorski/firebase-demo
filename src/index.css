@@ -17,7 +17,7 @@ form input {
   padding: 10px;
   display: block;
 }
-form button {
+button {
   margin: 5px;
   padding: 10px;
   display: block;
@@ -26,6 +26,10 @@ form button {
 form div {
   margin: 5px;
   color: red;
+}
+
+.App div {
+  margin: 10px;
 }
 
 .Navigation {
@@ -58,12 +62,17 @@ form div {
   color: white;
 }
 
-.adminDashboard ul li {
+.Admin-dashboard ul li {
   margin: 5px 0;
 }
 
-.adminDashboard ul li span {
+.Admin-dashboard ul li span {
   margin-right: 10px;
+}
+
+.Login-management ul {
+  list-style: none;
+  padding: 0;
 }
 
 /* Checkbox style */

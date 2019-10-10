@@ -9,13 +9,13 @@ import * as ROLES from '../../constants/roles';
 const Navigation = () => {
   const authUser = useContext(AuthUserContext);
   return (
-    <div className='Navigation'>
+    <nav className='Navigation'>
       {authUser ? (
         <NavigationAuth authUser={authUser} />
       ) : (
         <NavigationNonAuth />
       )}
-    </div>
+    </nav>
   );
 };
 

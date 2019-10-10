@@ -11,6 +11,10 @@ const config = {
   messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
 };
 
+interface Firebase {
+  [key: string]: any;
+}
+
 class Firebase {
   auth: app.auth.Auth;
   db: app.database.Database;
@@ -19,6 +23,7 @@ class Firebase {
   constructor() {
     app.initializeApp(config);
 
+    this.emailAuthProvider = app.auth.EmailAuthProvider;
     this.auth = app.auth();
     this.db = app.database();
     this.googleProvider = new app.auth.GoogleAuthProvider();

@@ -7,6 +7,15 @@ import { PasswordForgetLink } from '../PasswordForget';
 import { FirebaseContext } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
 
+const ERROR_CODE_ACCOUNT_EXISTS =
+  'auth/account-exists-with-different-credential';
+const ERROR_MSG_ACCOUNT_EXISTS = `
+An account with an E-Mail address to
+this social account already exists. Try to login from
+this account instead and associate your social accounts on
+your personal account page.
+`;
+
 const SignInPage = () => {
   const firebase = useContext(FirebaseContext);
   let history = useHistory();
@@ -92,6 +101,9 @@ const SignInGoogle = () => {
               history.push(ROUTES.HOME);
             },
             error => {
+              if (error.code === ERROR_CODE_ACCOUNT_EXISTS) {
+                error.message = ERROR_MSG_ACCOUNT_EXISTS;
+              }
               actions.setSubmitting(false);
               actions.setStatus({ msg: error.message });
             },
@@ -132,6 +144,9 @@ const SignInFacebook = () => {
               history.push(ROUTES.HOME);
             },
             error => {
+              if (error.code === ERROR_CODE_ACCOUNT_EXISTS) {
+                error.message = ERROR_MSG_ACCOUNT_EXISTS;
+              }
               actions.setSubmitting(false);
               actions.setStatus({ msg: error.message });
             },

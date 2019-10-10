@@ -36,7 +36,7 @@ const App = () => {
   return (
     <AuthUserContext.Provider value={authUser}>
       <Router>
-        <div>
+        <div className='App'>
           <Navigation />
           <Route exact path={ROUTES.LANDING} component={LandingPage} />
           <Route path={ROUTES.SIGN_UP} component={SignUpPage} />
