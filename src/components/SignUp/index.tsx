@@ -69,6 +69,9 @@ const SignUpPage = () => {
                 roles,
               });
             })
+            .then(() => {
+              return firebase!.doSendEmailVerification();
+            })
             .then(
               () => {
                 actions.setSubmitting(false);

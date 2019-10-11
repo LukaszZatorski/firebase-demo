@@ -1,7 +1,13 @@
 import React, { useContext, useState, useEffect } from 'react';
+import { compose } from 'recompose';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import { FirebaseContext } from '../Firebase';
-import { AuthUserContext, withAuthorization, AuthUser } from '../Session';
+import {
+  AuthUserContext,
+  withAuthorization,
+  withEmailVerification,
+  AuthUser,
+} from '../Session';
 import PasswordChangeForm from '../PasswordChange';
 
 const SIGN_IN_METHODS = [
@@ -191,4 +197,7 @@ const DefaultLoginToggle = ({
 };
 
 const condition = (authUser: AuthUser | null) => !!authUser;
-export default withAuthorization(condition)(AccountPage);
+export default compose(
+  withEmailVerification,
+  withAuthorization(condition),
+)(AccountPage);
