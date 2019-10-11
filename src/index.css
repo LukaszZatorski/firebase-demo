@@ -70,6 +70,13 @@ form div {
   margin-right: 10px;
 }
 
+.User-item span {
+  margin-right: 10px;
+}
+
+.User-item button {
+  display: inline-block;
+}
 .Login-management ul {
   list-style: none;
   padding: 0;
