@@ -88,12 +88,14 @@ const SignInGoogle = () => {
         firebase!
           .doSignInWithGoogle()
           .then(socialAuthUser => {
-            // Create a user in your Firebase Realtime Database
-            return firebase!.user(socialAuthUser.user!.uid).set({
-              username: socialAuthUser.user!.displayName,
-              email: socialAuthUser.user!.email,
-              roles: {},
-            });
+            if (!firebase!.user(socialAuthUser.user!.uid)) {
+              // Create a user in your Firebase Realtime Database
+              return firebase!.user(socialAuthUser.user!.uid).set({
+                username: socialAuthUser.user!.displayName,
+                email: socialAuthUser.user!.email,
+                roles: {},
+              });
+            }
           })
           .then(
             () => {
@@ -131,12 +133,14 @@ const SignInFacebook = () => {
         firebase!
           .doSignInWithFacebook()
           .then(socialAuthUser => {
-            // Create a user in your Firebase Realtime Database
-            return firebase!.user(socialAuthUser.user!.uid).set({
-              username: socialAuthUser.user!.displayName,
-              email: socialAuthUser.user!.email,
-              roles: {},
-            });
+            if (!firebase!.user(socialAuthUser.user!.uid)) {
+              // Create a user in your Firebase Realtime Database
+              return firebase!.user(socialAuthUser.user!.uid).set({
+                username: socialAuthUser.user!.displayName,
+                email: socialAuthUser.user!.email,
+                roles: {},
+              });
+            }
           })
           .then(
             () => {
