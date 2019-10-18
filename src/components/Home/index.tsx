@@ -31,28 +31,33 @@ const Messages = () => {
   const authUser = useContext(AuthUserContext);
   const [loading, setLoading] = useState(false);
   const [messages, setMessages] = useState<Message[] | null>(null);
+  const [limit, setLimit] = useState(10);
 
   useEffect(() => {
     setLoading(true);
-    firebase!.messages().on('value', snapshot => {
-      const messageObject = snapshot.val();
+    firebase!
+      .messages()
+      .orderByChild('createdAt')
+      .limitToLast(limit)
+      .on('value', snapshot => {
+        const messageObject = snapshot.val();
 
-      if (messageObject) {
-        const messageList = Object.keys(messageObject).map<Message>(key => ({
-          ...messageObject[key],
-          uid: key,
-        }));
-        setMessages(messageList);
-        setLoading(false);
-      } else {
-        setMessages(null);
-        setLoading(true);
-      }
-    });
+        if (messageObject) {
+          const messageList = Object.keys(messageObject).map<Message>(key => ({
+            ...messageObject[key],
+            uid: key,
+          }));
+          setMessages(messageList);
+          setLoading(false);
+        } else {
+          setMessages(null);
+          setLoading(true);
+        }
+      });
     return () => {
       firebase!.messages().off();
     };
-  }, [firebase]);
+  }, [firebase, limit]);
 
   const onRemoveMessage = (uid: string) => {
     firebase!.message(uid).remove();
@@ -71,6 +76,14 @@ const Messages = () => {
   return (
     <div>
       {loading && <div>Loading ...</div>}
+      {!loading && messages && (
+        <button
+          type='button'
+          onClick={() => setLimit(prevLimit => prevLimit + 10)}
+        >
+          Load more messages
+        </button>
+      )}
       {messages ? (
         <MessageList
           messages={messages}
