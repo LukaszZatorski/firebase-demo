@@ -7,6 +7,7 @@ export type AuthUser = {
   emailVerified: boolean;
   providerData: app.UserInfo[];
   roles: { [string_key: string]: string };
+  username: string;
 };
 
 const AuthUserContext = React.createContext<AuthUser | null>(null);

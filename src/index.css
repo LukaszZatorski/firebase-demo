@@ -13,12 +13,12 @@ code {
 }
 
 form input {
-  margin: 5px;
+  margin: 5px 0px;
   padding: 10px;
   display: block;
 }
 button {
-  margin: 5px;
+  margin: 5px 0px;
   padding: 10px;
   display: block;
 }
@@ -80,6 +80,25 @@ form div {
 .Login-management ul {
   list-style: none;
   padding: 0;
+}
+
+.Message-list {
+  padding: 0;
+}
+
+.Message-list li {
+  list-style: none;
+  max-width: 40%;
+  margin-bottom: 10px;
+}
+
+.Message-list li div button {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.Message-input {
+  resize: none;
 }
 
 /* Checkbox style */
